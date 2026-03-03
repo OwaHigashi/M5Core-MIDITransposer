@@ -1,5 +1,9 @@
 #include <M5Core2.h>
 
+// for SD-Updater
+#define SDU_ENABLE_GZ
+#include <M5StackUpdater.h>
+
 // CORE2でのピンアサイン（M5 MIDI Module2）
 #define RXD2 13
 #define TXD2 14
@@ -99,7 +103,10 @@ int8_t clampTranspose(int8_t v) {
 
 void setup() {
   M5.begin(true, true, true, true);
-  
+
+  // for SD-Updater
+  checkSDUpdater( SD, MENU_BIN, 2000, TFCARD_CS_PIN );
+
   Serial.begin(115200);
   Serial2.begin(31250, SERIAL_8N1, RXD2, TXD2);
   Serial2.setRxBufferSize(256);
